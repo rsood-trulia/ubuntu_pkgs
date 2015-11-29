@@ -1,14 +1,13 @@
+# install ubuntu pkgs
 class ubuntu_pkgs {
 
   include apt
+  include stdlib
 
   $pkgs = hiera_array('ubuntu_pkgs', [])
 
   each($ubuntu_pkgs::pkgs) |$mypkg| {
-    package { $mypkg:
-      ensure  => installed,
-      require => Class['apt'],
-    }
+    ensure_packages($mypkg)
   }
 
 }
